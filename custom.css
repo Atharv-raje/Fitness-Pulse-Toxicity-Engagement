@@ -1,0 +1,80 @@
+:root {
+    --cyan: #00BCD4;
+    --dark-blue: #001B41;
+    --white: #ffffff;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--dark-blue);
+    /* Corrected the background-image path here */
+    background-image: url('../images/background.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: var(--white);
+}
+
+.dashboard-header {
+    background: rgba(0, 27, 65, 0.8);
+    padding: 1.5rem 0;
+    border-bottom: 1px solid rgba(0, 188, 212, 0.2);
+}
+
+.dashboard-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    color: var(--white);
+}
+
+.platform-card {
+    background: rgba(0, 27, 65, 0.8);
+    border: 1px solid rgba(0, 188, 212, 0.2);
+    border-radius: 8px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.platform-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--cyan);
+    box-shadow: 0 4px 20px rgba(0, 188, 212, 0.2);
+}
+
+.analysis-button {
+    background-color: var(--cyan);
+    color: var(--white);
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.analysis-button:hover {
+    background-color: #008ba3;
+    transform: translateY(-2px);
+}
+
+.filter-container {
+    background: rgba(0, 27, 65, 0.8);
+    border: 1px solid rgba(0, 188, 212, 0.2);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.filter-select {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 4px;
+    background: rgba(0, 27, 65, 0.9);
+    border: 1px solid rgba(0, 188, 212, 0.2);
+    color: var(--white);
+}
+
+.plot-container {
+    background: rgba(0, 27, 65, 0.8);
+    border: 1px solid rgba(0, 188, 212, 0.2);
+}
