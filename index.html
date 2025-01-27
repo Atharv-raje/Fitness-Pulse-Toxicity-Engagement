@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Data Analysis Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+</head>
+<body>
+    <div class="min-h-screen">
+        <header class="dashboard-header">
+            <div class="container mx-auto px-4">
+                <h1 class="dashboard-title">Data-Driven Fitness: Toxicity and Engagement Analysis</h1>
+            </div>
+        </header>
+
+        <main class="container mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Reddit Card -->
+                <div class="platform-card" onclick="window.location.href='/reddit'">
+                    <h2 class="text-2xl font-bold mb-4">Reddit Analysis</h2>
+                    <p class="text-gray-300">
+                        Analyze discussions from r/Fitness, r/Nutrition, and r/MentalHealth subreddits.
+                    </p>
+                </div>
+
+                <!-- 4chan Card -->
+                <div class="platform-card" onclick="window.location.href='/4chan'">
+                    <h2 class="text-2xl font-bold mb-4">4chan Analysis</h2>
+                    <p class="text-gray-300">
+                        Explore fitness and health discussions on 4chan's /fit/ board.
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
