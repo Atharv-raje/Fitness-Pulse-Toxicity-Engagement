@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ platform|title }} Analysis - Fitness Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <!-- Ensure the CSS file is linked -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+</head>
+<body>
+    <div class="min-h-screen">
+        <header class="dashboard-header">
+            <div class="container mx-auto px-4">
+                <a href="/" class="back-button">← Back to Dashboard</a>
+                <h1 class="dashboard-title mt-4">{{ platform|title }} Analysis</h1>
+            </div>
+        </header>
+
+        <main class="container mx-auto px-4 py-8">
+            <!-- Buttons -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                <button onclick="loadAnalysis('toxicity')" class="analysis-button">
+                    Toxicity Analysis
+                </button>
+                <button onclick="loadAnalysis('engagement')" class="analysis-button">
+                    Engagement Metrics
+                </button>
+            </div>
+
+            <!-- Filters (no Time Analysis or Sort By as per previous request) -->
+            <div class="filter-container">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-white">Category</label>
+                        <select id="categoryFilter" class="filter-select">
+                            <option value="all">All Categories</option>
+                            <option value="fitness">Fitness</option>
+                            {% if platform != '4chan' %}
+                            <option value="nutrition">Nutrition</option>
+                            <option value="mental-health">Mental Health</option>
+                            {% endif %}
+                            <option value="politics">Politics</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-white">Start Date</label>
+                        <input id="startDateFilter" type="date" class="filter-select" placeholder="mm/dd/yyyy">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-white">End Date</label>
+                        <input id="endDateFilter" type="date" class="filter-select" placeholder="mm/dd/yyyy">
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <!-- Plot Container -->
+            <div class="plot-container mt-8">
+                <div id="plotOutput" class="relative">
+                    <img id="plotImage" class="mx-auto hidden">
+                    <div id="placeholder" class="text-center py-8 text-white">
+                        Select an analysis type to view the data
+                    </div>
+                    <div id="loading" class="loading hidden"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let currentAnalysis = null;
+
+        function loadAnalysis(analysisType) {
+            currentAnalysis = analysisType;
+            console.log('Loading analysis:', analysisType);
+            const plotImage = document.getElementById('plotImage');
+            const placeholder = document.getElementById('placeholder');
+            const loading = document.getElementById('loading');
+
+            plotImage.classList.add('hidden');
+            placeholder.classList.add('hidden');
+            loading.classList.remove('hidden');
+
+            const category = document.getElementById('categoryFilter').value;
+            const startDate = document.getElementById('startDateFilter').value;
+            const endDate = document.getElementById('endDateFilter').value;
+
+            const timestamp = new Date().getTime();
+            const queryParams = `category=${category}&startDate=${startDate}&endDate=${endDate}&t=${timestamp}`;
+
+            plotImage.src = `/api/plot/{{ platform }}/${analysisType}?${queryParams}`;
+
+            plotImage.onload = function() {
+                loading.classList.add('hidden');
+                plotImage.classList.remove('hidden');
+            };
+
+            plotImage.onerror = function() {
+                console.error("Error loading the analysis image.");
+                loading.classList.add('hidden');
+                placeholder.classList.remove('hidden');
+                placeholder.textContent = 'Error loading the analysis. Please try again.';
+            };
+        }
+
+        document.querySelectorAll('.filter-select').forEach(select => {
+            select.addEventListener('change', () => {
+                if (currentAnalysis) {
+                    loadAnalysis(currentAnalysis);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+  
